@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "@swapkit/sdk": "^2.0.6",
+    "hono": "^4.6.9"
+  },
+  "devDependencies": {
+    "@types/node": "20.17.6",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.6.3",
+    "vercel": "^32.4.1"
+  },
+  "name": "hono-vercel",
+  "scripts": {
+    "build": "bun build.ts",
+    "predeploy": "vercel build --prod --token=$VERCEL_TOKEN",
+    "deploy": "vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN",
+    "pull": "vercel pull --yes --environment=production --token=$VERCEL_TOKEN",
+    "start": "vercel dev"
+  },
+  "type": "module"
+}

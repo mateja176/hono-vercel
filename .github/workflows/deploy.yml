@@ -1,0 +1,29 @@
+name: deploy
+run-name: '${{ github.ref_name }} by ${{ github.actor }}, run: ${{ github.run_number }}, attempt: ${{ github.run_attempt }}'
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    environment: cd
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Set up bun
+        uses: oven-sh/setup-bun@v2
+      - name: Install dependencies
+        run: bun install --frozen-lockfile --ignore-scripts
+      - name: Pull
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: bun run pull
+      - name: Build
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: bun run build
+      - name: Deploy
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: bun run deploy
